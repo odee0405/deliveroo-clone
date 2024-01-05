@@ -7,11 +7,14 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  TextInput
 } 
 from "react-native";
 import { Link } from 'expo-router';
-import { TextInput } from "react-native-gesture-handler";
-import React from 'react';
+import BottomSheet from "@/Components/BottomSheets";
+import {useRef} from "react";
+import {BottomSheetModal} from "@gorhom/bottom-sheet";
+
 
 const SearchBar = () => 
   <View style={styles.searchContainer}>
@@ -30,18 +33,24 @@ const SearchBar = () =>
 ;
 
 const CustomHeader = () => {
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const openModal = () => {
+    bottomSheetRef.current?.present();
+    console.log('open modal');
+  };
   return (
     <SafeAreaView style={styles.safeArea}>
+      <BottomSheet ref={bottomSheetRef}/>
       <View style={styles.container}>
 
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={openModal}>
           <Image
             style={styles.bike}
             source={require("@/assets/images/bike.png")}
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.titleContainer}>
+        <TouchableOpacity onPress={openModal} style={styles.titleContainer}>
           <Text style={styles.title}>Delivery • Now</Text>
           <View style={styles.locationName}>
             <Text style={styles.subtitle}>London</Text>
